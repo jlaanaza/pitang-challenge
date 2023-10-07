@@ -2,8 +2,8 @@ package com.pitang.controller;
 
 import com.pitang.dto.LoginDTO;
 import com.pitang.model.User;
+import com.pitang.service.JwtTokenService;
 import com.pitang.service.LoginService;
-import com.pitang.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,12 +31,23 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    @Autowired
+    private JwtTokenService jwtTokenService;
+
 
     @PostMapping(value ="/signin")
     public ResponseEntity<?>  signIn(@RequestBody LoginDTO loginDTO) {
         User user = loginService.validateLogin(loginDTO);
 
-        String token = JwtUtils.generateJwtToken(loginDTO.getLogin(), user);
+        Map<String, Object> claims = Map.of(
+                "firstName", user.getFirstName(),
+                "lastName", user.getLastName(),
+                "email", user.getEmail(),
+                "birthday", user.getBirthday(),
+                "phone", user.getPhone()
+        );
+
+        String token = jwtTokenService.generateJwtToken(loginDTO.getLogin(), claims);
 
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
