@@ -46,12 +46,13 @@ Critérios de Aceitação:
 Deve haver uma rota /api/me que retorne informações do usuário logado (firstName, lastName, email, birthday, login, phone, cars).
 Além das informações do usuário, deve incluir informações como createdAt (data de criação do usuário) e lastLogin (data da última vez que o usuário realizou login).
 
-Estória de Usuário 6: Autenticação Requerida para Gerenciamento de Carros e Usuários
+Estória de Usuário 6: Autenticação Requerida para Gerenciamento de Carros
 
-Como um usuário autenticado, desejo que todas as operações de gerenciamento de carros e usuários (listar, cadastrar, buscar, remover e atualizar) exijam autenticação via token JWT.
+Como um usuário autenticado, desejo que todas as operações de gerenciamento de carros (listar, cadastrar, buscar, remover e atualizar) exijam autenticação via token JWT.
 Critérios de Aceitação:
-Todas as rotas relacionadas a carros e usuários (exceto /api/signin) devem exigir que o token de acesso JWT seja enviado no cabeçalho Authorization.
-Em caso de token não enviado ou token expirado, deve retornar um erro com a mensagem "Unauthorized" ou "Unauthorized - invalid session".
+Todas as rotas relacionadas a carros devem exigir que o token de acesso JWT seja enviado no cabeçalho Authorization.
+Em caso de token não enviado deve retornar um erro com a mensagem "Unauthorized".
+Em caso de token expirado, deve retornar um erro com a mensagem "Unauthorized - invalid session".
 
 Estória de Usuário 7: Desenvolver front-end funcional
 
