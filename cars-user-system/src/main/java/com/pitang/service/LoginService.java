@@ -25,6 +25,10 @@ public class LoginService {
         return user;
     }
 
+    public String passwordEncoder(String password){
+       return passwordEncoder.encode(password);
+    }
+
     private boolean validatePassword(String passwordRequest , String passwordUserDB) {
         return passwordEncoder.matches( passwordRequest, passwordUserDB );
     }

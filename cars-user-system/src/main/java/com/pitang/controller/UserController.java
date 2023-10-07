@@ -1,7 +1,6 @@
 package com.pitang.controller;
 
 import com.pitang.dto.UserDTO;
-import com.pitang.model.User;
 import com.pitang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/users")
@@ -22,41 +21,34 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDTO>> listAll() {
 
-        return new ResponseEntity<>( null, new HttpHeaders(), HttpStatus.OK );
+        List<UserDTO> userDTOS = userService.getAll();
+
+        return new ResponseEntity<>( userDTOS, new HttpHeaders(), HttpStatus.OK );
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
-        User response = null;
-        try {
-            response = userService.findById(id);
-        } catch (NoSuchElementException noSuchException) {
-            return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
+        UserDTO response = userService.findById(id);
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody User User) {
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO) {
 
-        return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.CREATED);
+        UserDTO response = userService.create(userDTO);
+
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@RequestBody User User, @PathVariable(value = "id") Long id) {
-        User response = null;
-        try {
-            response = userService.findById(id);
-        } catch (NoSuchElementException noSuchException) {
-            return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO, @PathVariable(value = "id") Long id) {
+        UserDTO response = userService.update(id, userDTO);
+        return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<UserDTO> delete(@PathVariable Long id) {
-
+        userService.delete( id );
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
     }
 

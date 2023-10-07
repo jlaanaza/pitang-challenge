@@ -1,6 +1,5 @@
 package com.pitang.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,9 +25,5 @@ public class Car {
     private String model;
     @Column(name = "color")
     private String color;
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
 }

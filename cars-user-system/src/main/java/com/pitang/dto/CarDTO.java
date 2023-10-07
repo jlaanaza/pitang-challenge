@@ -1,14 +1,26 @@
 package com.pitang.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarDTO {
-	
-    private String year;
+    @NotNull
+    private Integer year;
+    @NotEmpty
     private String licensePlate;
+    @NotEmpty
     private String model;
+    @NotEmpty
     private String color;
 
 }
