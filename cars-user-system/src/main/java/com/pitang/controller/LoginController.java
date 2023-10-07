@@ -1,7 +1,8 @@
 package com.pitang.controller;
 
 import com.pitang.dto.LoginDTO;
-import com.pitang.service.UserService;
+import com.pitang.model.User;
+import com.pitang.service.LoginService;
 import com.pitang.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,14 +29,14 @@ public class LoginController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserService userService;
+    private LoginService loginService;
 
 
     @PostMapping(value ="/signin")
     public ResponseEntity<?>  signIn(@RequestBody LoginDTO loginDTO) {
-        userService.validateLogin(loginDTO);
+        User user = loginService.validateLogin(loginDTO);
 
-        String token = JwtUtils.generateJwtToken(loginDTO.getLogin());
+        String token = JwtUtils.generateJwtToken(loginDTO.getLogin(), user);
 
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
