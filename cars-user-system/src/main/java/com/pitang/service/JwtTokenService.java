@@ -2,6 +2,7 @@ package com.pitang.service;
 
 import com.pitang.exception.JwtInvalidException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -37,8 +39,12 @@ public class JwtTokenService {
     }
 
     public boolean validateToken(String token) {
+        String jwtToken = getToken( token );
+        if (jwtToken == null) throw new JwtInvalidException("Unauthorized");
+
+
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            getClaimsJws( jwtToken );
             return true;
         } catch (Exception e) {
             throw new JwtInvalidException("Unauthorized");
@@ -46,11 +52,35 @@ public class JwtTokenService {
     }
 
     public String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
+
+        String jwtToken = getToken( token );
+        if (jwtToken == null) return null;
+
+        Claims claims = getClaimsJws( jwtToken )
                 .getBody();
+
         return claims.getSubject();
+    }
+
+    private Jws<Claims> getClaimsJws (String jwtToken){
+        return Jwts.parser()
+                .setSigningKey( jwtSecret )
+                .parseClaimsJws( jwtToken );
+    }
+
+    private String getToken (String token){
+        if(!StringUtils.hasText( token )){
+            return null;
+        }
+
+        String jwtToken;
+
+        if(token.startsWith("Bearer ")){
+            jwtToken = token.substring(7);
+        }else{
+            jwtToken = token;
+        }
+        return jwtToken;
     }
 
     public Authentication getAuthentication(String username) {

@@ -25,5 +25,7 @@ public class Car {
     private String model;
     @Column(name = "color")
     private String color;
+    @Column(name = "user_id")
+    private Long userId;
 
 }

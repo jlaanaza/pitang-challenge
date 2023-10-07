@@ -24,6 +24,10 @@ public class UserService {
         List<User> users = userRepository.findAll();
         return users.stream().map( user -> userMapper.toReponseUserDTO( user )).collect( Collectors.toList());
     }
+
+    public User findUserByLogin(String username) {
+        return userRepository.findByLogin(username).orElseThrow(NotFoundException::new);
+    }
     
     public UserDTO findById(Long id) {
         return userMapper.toReponseUserDTO( userRepository.findById(id).orElseThrow( NotFoundException::new ));

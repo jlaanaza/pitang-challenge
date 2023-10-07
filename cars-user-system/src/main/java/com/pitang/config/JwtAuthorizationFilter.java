@@ -15,7 +15,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private JwtTokenService jwtTokenService;
+    private final JwtTokenService jwtTokenService;
 
     public JwtAuthorizationFilter(JwtTokenService jwtTokenService) {
         this.jwtTokenService = jwtTokenService;
@@ -27,23 +27,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader("Authorization");
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String jwtToken;
-            if(authorizationHeader.startsWith("Bearer ")){
-                jwtToken = authorizationHeader.substring(7);
-            }else{
-                jwtToken = authorizationHeader;
-            }
-
+        if (authorizationHeader != null) {
             try {
-                if (jwtTokenService.validateToken(jwtToken)) {
-                    String username = jwtTokenService.getUsernameFromToken(jwtToken);
+                if (jwtTokenService.validateToken(authorizationHeader)) {
+                    String username = jwtTokenService.getUsernameFromToken(authorizationHeader);
                     Authentication authentication = jwtTokenService.getAuthentication(username);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (Exception e) {
-               throw  e;
+                response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
+                return;
             }
+        }else{
+            response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
+            return;
         }
 
         filterChain.doFilter(request, response);

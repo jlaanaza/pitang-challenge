@@ -18,7 +18,7 @@ public class LoginService {
     private UserRepository userRepository;
 
     public User validateLogin(LoginDTO loginDTO) {
-        User user = userRepository.findByLogin(loginDTO.getLogin());
+        User user = userRepository.findByLogin(loginDTO.getLogin()).orElse( null );
         if (user == null || !this.validatePassword(loginDTO.getPassword(), user.getPassword())) {
             throw new UsernameNotFoundException("Invalid login or password");
         }
