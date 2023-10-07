@@ -1,11 +1,12 @@
 package com.pitang.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "user_tb")
 @Getter
 @Setter
 @Builder
@@ -32,7 +33,8 @@ public class User {
     private String password;
     @Column(name = "phone")
     private String phone;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany
+    @JoinColumn(name = "user_id")
     private List<Car> cars;
-
 }
