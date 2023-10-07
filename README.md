@@ -52,3 +52,9 @@ Como um usuário autenticado, desejo que todas as operações de gerenciamento d
 Critérios de Aceitação:
 Todas as rotas relacionadas a carros e usuários (exceto /api/signin) devem exigir que o token de acesso JWT seja enviado no cabeçalho Authorization.
 Em caso de token não enviado ou token expirado, deve retornar um erro com a mensagem "Unauthorized" ou "Unauthorized - invalid session".
+
+Estória de Usuário 7: Desenvolver front-end funcional
+
+Como um usuário, desejo ter acesso gráfico ao sistema de forma funcional, para poder operar a aplicação.
+Critérios de Aceitação:
+Ter as rotas do backend sendo acessadas via front-end utilizando angular.
