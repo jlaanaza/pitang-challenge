@@ -1,10 +1,12 @@
 package com.pitang.service;
 
 import com.pitang.exception.JwtInvalidException;
+import com.pitang.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,6 +30,9 @@ public class JwtTokenService {
     @Value("${security.jwt.token-validity-in-seconds}")
     private long expirationMs;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public String generateJwtToken(String login, Map<String, Object> claims) {
         return Jwts.builder()
                 .addClaims( claims )
@@ -41,7 +46,6 @@ public class JwtTokenService {
     public boolean validateToken(String token) {
         String jwtToken = getToken( token );
         if (jwtToken == null) throw new JwtInvalidException("Unauthorized");
-
 
         try {
             getClaimsJws( jwtToken );
@@ -84,6 +88,8 @@ public class JwtTokenService {
     }
 
     public Authentication getAuthentication(String username) {
+        userRepository.findByLogin( username ).orElseThrow(() -> new JwtInvalidException("Unauthorized"));
+
         List<GrantedAuthority> authorities = getAuthoritiesForUser(username);
 
         return new UsernamePasswordAuthenticationToken(username, null, authorities);
