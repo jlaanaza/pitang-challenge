@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 public class LoginService {
@@ -28,7 +29,7 @@ public class LoginService {
 
     public UserDTO validateLogin(LoginDTO loginDTO) {
         User user = userRepository.findByLogin(loginDTO.getLogin()).orElse( null );
-        if (user == null || !passwordEncoderUtils.validatePassword(loginDTO.getPassword(), user.getPassword())) {
+        if (Objects.isNull(user) || Objects.isNull(loginDTO.getPassword()) || !passwordEncoderUtils.validatePassword(loginDTO.getPassword(), user.getPassword())) {
             throw new UsernameNotFoundException("Invalid login or password");
         }
         user.setLastLogin( LocalDateTime.now() );
