@@ -2,10 +2,11 @@ package com.pitang.mapper;
 
 import com.pitang.dto.UserDTO;
 import com.pitang.model.User;
-import com.pitang.service.LoginService;
+import com.pitang.utils.PasswordEncoderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class UserMapper {
     private CarMapper carMapper;
 
     @Autowired
-    private LoginService loginService;
+    private PasswordEncoderUtils passwordEncoderUtils;
 
     public UserDTO toReponseUserDTO(User user) {
         if(Objects.isNull(user)){
@@ -35,7 +36,26 @@ public class UserMapper {
                 .build();
     }
 
-    public User toUser(UserDTO userDTO) {
+    public UserDTO toTokenUserDTO(User user) {
+        if(Objects.isNull(user)){
+            return null;
+        }
+
+        return UserDTO
+                .builder()
+                .email( user.getEmail() )
+                .phone( user.getPhone() )
+                .birthday( user.getBirthday() )
+                .login( user.getLogin() )
+                .firstName( user.getFirstName() )
+                .lastName( user.getLastName() )
+                .cars( user.getCars().stream().map( car -> carMapper.toCarDTO( car ) ).collect( Collectors.toList()) )
+                .createdAt( user.getCreatedAt() )
+                .lastLogin( user.getLastLogin() )
+                .build();
+    }
+
+    public User toSaveUser(UserDTO userDTO) {
         if(Objects.isNull(userDTO)){
             return null;
         }
@@ -48,8 +68,9 @@ public class UserMapper {
                 .login( userDTO.getLogin() )
                 .firstName( userDTO.getFirstName() )
                 .lastName( userDTO.getLastName() )
-                .password( loginService.passwordEncoder( userDTO.getPassword() ) )
+                .password( passwordEncoderUtils.passwordEncoder( userDTO.getPassword() ) )
                 .cars( userDTO.getCars().stream().map( carDTO -> carMapper.toCar( carDTO ) ).collect( Collectors.toList()) )
+                .createdAt( LocalDateTime.now() )
                 .build();
     }
 
@@ -64,7 +85,7 @@ public class UserMapper {
             existingUser.setLogin(userDTO.getLogin());
         }
         if (userDTO.getPassword() != null) {
-            existingUser.setPassword(loginService.passwordEncoder(userDTO.getPassword()));
+            existingUser.setPassword( passwordEncoderUtils.passwordEncoder(userDTO.getPassword()));
         }
         if (userDTO.getPhone() != null) {
             existingUser.setPhone(userDTO.getPhone());

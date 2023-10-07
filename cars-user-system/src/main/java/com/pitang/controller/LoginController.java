@@ -1,7 +1,7 @@
 package com.pitang.controller;
 
 import com.pitang.dto.LoginDTO;
-import com.pitang.model.User;
+import com.pitang.dto.UserDTO;
 import com.pitang.service.JwtTokenService;
 import com.pitang.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,10 +31,9 @@ public class LoginController {
     @Autowired
     private JwtTokenService jwtTokenService;
 
-
     @PostMapping(value ="/signin")
     public ResponseEntity<?>  signIn(@RequestBody LoginDTO loginDTO) {
-        User user = loginService.validateLogin(loginDTO);
+        UserDTO user = loginService.validateLogin(loginDTO);
 
         Map<String, Object> claims = Map.of(
                 "firstName", user.getFirstName(),
@@ -56,9 +52,11 @@ public class LoginController {
     }
 
     @PostMapping(value = "/me")
-    public ResponseEntity<?> getInfoUser() {
+    public ResponseEntity<?> getInfoUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+        String userName = jwtTokenService.getUsernameFromToken( authorization );
+        UserDTO userDTO = loginService.findByUsername( userName );
 
-        return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(userDTO, new HttpHeaders(), HttpStatus.OK);
     }
 
 

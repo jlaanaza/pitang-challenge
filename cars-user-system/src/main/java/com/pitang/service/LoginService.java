@@ -1,35 +1,46 @@
 package com.pitang.service;
 
 import com.pitang.dto.LoginDTO;
+import com.pitang.dto.UserDTO;
+import com.pitang.exception.NotFoundException;
+import com.pitang.mapper.UserMapper;
 import com.pitang.model.User;
 import com.pitang.repository.UserRepository;
+import com.pitang.utils.PasswordEncoderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class LoginService {
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoderUtils passwordEncoderUtils;
+
 
     @Autowired
     private UserRepository userRepository;
 
-    public User validateLogin(LoginDTO loginDTO) {
+    @Autowired
+    private UserMapper userMapper;
+
+    public UserDTO validateLogin(LoginDTO loginDTO) {
         User user = userRepository.findByLogin(loginDTO.getLogin()).orElse( null );
-        if (user == null || !this.validatePassword(loginDTO.getPassword(), user.getPassword())) {
+        if (user == null || !passwordEncoderUtils.validatePassword(loginDTO.getPassword(), user.getPassword())) {
             throw new UsernameNotFoundException("Invalid login or password");
         }
-        return user;
+        user.setLastLogin( LocalDateTime.now() );
+        return userMapper.toTokenUserDTO( userRepository.save( user ) );
     }
 
-    public String passwordEncoder(String password){
-       return passwordEncoder.encode(password);
+    public Long findIdUserByLogin(String username) {
+        return userRepository.findByLogin(username).orElseThrow( NotFoundException::new).getId();
     }
 
-    private boolean validatePassword(String passwordRequest , String passwordUserDB) {
-        return passwordEncoder.matches( passwordRequest, passwordUserDB );
+    public UserDTO findByUsername(String username) {
+        return userMapper.toTokenUserDTO( userRepository.findByLogin(username).orElseThrow( NotFoundException::new) );
     }
+
 }

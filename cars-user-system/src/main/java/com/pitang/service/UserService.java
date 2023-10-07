@@ -19,14 +19,10 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
-    
+
     public List<UserDTO> getAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map( user -> userMapper.toReponseUserDTO( user )).collect( Collectors.toList());
-    }
-
-    public User findUserByLogin(String username) {
-        return userRepository.findByLogin(username).orElseThrow(NotFoundException::new);
     }
     
     public UserDTO findById(Long id) {
@@ -34,7 +30,7 @@ public class UserService {
     }
 
     public UserDTO create(UserDTO userDTO) {
-        User user = userMapper.toUser( userDTO );
+        User user = userMapper.toSaveUser( userDTO );
 
         return userMapper.toReponseUserDTO( userRepository.save(user) );
     }
