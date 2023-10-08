@@ -26,13 +26,14 @@ public class UserMapper {
 
         return UserDTO
                 .builder()
+                .id(user.getId())
                 .email( user.getEmail() )
                 .phone( user.getPhone() )
                 .birthday( user.getBirthday() )
                 .login( user.getLogin() )
                 .firstName( user.getFirstName() )
                 .lastName( user.getLastName() )
-                .cars( user.getCars().stream().map( car -> carMapper.toCarDTO( car ) ).collect( Collectors.toList()) )
+                .cars( Objects.isNull( user.getCars() ) ? null : user.getCars().stream().map( car -> carMapper.toCarDTO( car ) ).collect( Collectors.toList()) )
                 .build();
     }
 
@@ -49,7 +50,7 @@ public class UserMapper {
                 .login( user.getLogin() )
                 .firstName( user.getFirstName() )
                 .lastName( user.getLastName() )
-                .cars( user.getCars().stream().map( car -> carMapper.toCarDTO( car ) ).collect( Collectors.toList()) )
+                .cars( Objects.isNull( user.getCars() ) ? null : user.getCars().stream().map( car -> carMapper.toCarDTO( car ) ).collect( Collectors.toList()) )
                 .createdAt( user.getCreatedAt() )
                 .lastLogin( user.getLastLogin() )
                 .build();
@@ -69,7 +70,7 @@ public class UserMapper {
                 .firstName( userDTO.getFirstName() )
                 .lastName( userDTO.getLastName() )
                 .password( passwordEncoderUtils.passwordEncoder( userDTO.getPassword() ) )
-                .cars( userDTO.getCars().stream().map( carDTO -> carMapper.toCar( carDTO ) ).collect( Collectors.toList()) )
+                .cars( Objects.isNull( userDTO.getCars() ) ? null : userDTO.getCars().stream().map( carDTO -> carMapper.toCar( carDTO ) ).collect( Collectors.toList() ) )
                 .createdAt( LocalDateTime.now() )
                 .build();
     }
