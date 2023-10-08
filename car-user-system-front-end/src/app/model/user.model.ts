@@ -1,3 +1,5 @@
+import { Car } from "./car.model";
+
 export class User {
   id?: any;
   firstName?: string;
@@ -7,6 +9,7 @@ export class User {
   login?: string;
   password?: string;
   phone?: string;
+  cars?: Car[];
   lastLogin?: string;
   createdAt?: string;
 }

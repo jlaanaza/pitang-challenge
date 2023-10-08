@@ -4,7 +4,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { LoginComponent } from './components/login/login.component';
-import { MeComponent } from './components/me/me.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { CarDetailsComponent } from './components/car-details/car-details.component';
 import { AddCarComponent } from './components/add-car/add-car.component';
@@ -15,10 +15,10 @@ const routes: Routes = [
   { path: 'users/:id', component: UserDetailsComponent },
   { path: 'add', component: AddUserComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'me', component: MeComponent },
+  { path: 'me', component: UserInfoComponent },
   { path: 'cars', component: CarListComponent },
   { path: 'cars/:id', component: CarDetailsComponent },
-  { path: 'addCar', component: AddCarComponent },
+  { path: 'addCar', component: AddCarComponent }, 
 ];
 
 @NgModule({

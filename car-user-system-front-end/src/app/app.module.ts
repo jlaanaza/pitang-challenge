@@ -11,11 +11,11 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { LoginComponent } from './components/login/login.component';
-import { MeComponent } from './components/me/me.component';
 import { AddCarComponent } from './components/add-car/add-car.component';
 import { CarDetailsComponent } from './components/car-details/car-details.component';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { HttpRequestInterceptor } from './helpers/http.interceptors';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +24,10 @@ import { HttpRequestInterceptor } from './helpers/http.interceptors';
     UserDetailsComponent,
     UserListComponent,
     LoginComponent,
-    MeComponent,
     AddCarComponent,
     CarDetailsComponent,
-    CarListComponent    
+    CarListComponent,
+    UserInfoComponent    
   ],
   imports: [
     BrowserModule,
