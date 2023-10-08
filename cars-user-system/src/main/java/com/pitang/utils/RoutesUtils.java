@@ -5,6 +5,6 @@ import java.util.List;
 
 public class RoutesUtils {
 
-    public static final List<String> publicRoutes = Arrays.asList("/api/signin", "/api/users/");
+    public static final List<String> publicRoutes = Arrays.asList("/api/signin", "/api/users");
 
 }
