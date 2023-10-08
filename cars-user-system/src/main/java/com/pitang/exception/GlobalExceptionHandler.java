@@ -16,7 +16,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({UsernameNotFoundException.class})
     public ResponseEntity<ExceptionError> handleUsernameNotFoundException(UsernameNotFoundException exception) {
-        //need to better this responseCode
         ExceptionError exceptionError = new ExceptionError(exception.getMessage(), HttpStatus.UNAUTHORIZED.value());
         return new ResponseEntity<>(exceptionError, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
@@ -42,8 +41,7 @@ public class GlobalExceptionHandler {
         } else {
             responseMessage += "Data Integrity Error";
         }
-        //todo: better this error code
-        ExceptionError exceptionError = new ExceptionError(responseMessage, 123);
+        ExceptionError exceptionError = new ExceptionError(responseMessage, HttpStatus.BAD_REQUEST.value());
 
         return new ResponseEntity<>(exceptionError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
