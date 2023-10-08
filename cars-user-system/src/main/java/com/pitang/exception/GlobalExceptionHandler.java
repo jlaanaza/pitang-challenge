@@ -21,13 +21,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionError, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({JwtInvalidException.class})
-    public ResponseEntity<ExceptionError> handleJwtInvalidException(JwtInvalidException exception) {
-        //need to better this responseCode
-        ExceptionError exceptionError = new ExceptionError(exception.getMessage(), HttpStatus.UNAUTHORIZED.value());
-        return new ResponseEntity<>(exceptionError, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
-    }
-
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<ExceptionError> handleNotFoundException(NotFoundException exception) {
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
