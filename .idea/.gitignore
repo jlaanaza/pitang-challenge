@@ -4,3 +4,10 @@
 
 # User-specific stuff
 .idea/*
+
+
+# User-specific stuff
+.car-user-system-front-end/.vscode/*
+.car-user-system-front-end/.angular/*
+
+.cars-user-system/target/
