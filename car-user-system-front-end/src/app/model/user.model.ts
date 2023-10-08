@@ -6,5 +6,7 @@ export class User {
   birthday? : string;
   login?: string;
   password?: string;
-  phone?: string;  
+  phone?: string;
+  lastLogin?: string;
+  createdAt?: string;
 }
