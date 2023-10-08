@@ -15,6 +15,7 @@ public class CarMapper {
         }
         return CarDTO
                 .builder()
+                .id( car.getId() )
                 .color( car.getColor() )
                 .licensePlate( car.getLicensePlate() )
                 .year( car.getYear() )

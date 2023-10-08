@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarDTO {
+    private Long id;
     @NotNull
     private Integer year;
     @NotEmpty
