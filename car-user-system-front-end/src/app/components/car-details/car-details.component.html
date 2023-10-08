@@ -1,0 +1,91 @@
+<div *ngIf="viewMode; else editable">
+    <div *ngIf="currentCar.id">
+      <h4>Carro</h4>
+      <div>
+        <label><strong>Placa do Carro:</strong></label> {{ currentCar.licensePlate }}
+      </div>
+      <div>
+        <label><strong>Modelo :</strong></label>
+        {{ currentCar.model }}
+      </div>  
+      <a
+        class="badge badge-warning"
+        routerLink="/cars/{{ currentCar.id }}"
+      >
+        Editar
+      </a>
+    </div>
+  
+    <div *ngIf="!currentCar">
+      <br />
+      <p>Por favor clique eu um Carro...</p>
+    </div>
+  </div>
+  
+  <ng-template #editable>
+    <div *ngIf="currentCar.id" class="edit-form">
+      <h4>Carro</h4>
+      <div class="form-group">
+        <label for="year">Ano do Carro</label>
+        <input
+          type="text"
+          class="form-control"
+          id="year"
+          required
+          [(ngModel)]="currentCar.year"
+          name="year"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="licensePlate">Placa</label>
+        <input
+          class="form-control"
+          id="licensePlate"
+          required
+          [(ngModel)]="currentCar.licensePlate"
+          name="licensePlate"
+        />
+      </div>
+
+      <div class="form-group">
+          <label for="model">Modelo</label>
+          <input
+            class="form-control"
+            id="model"
+            required
+            [(ngModel)]="currentCar.model"
+            name="model"
+          />
+      </div>       
+
+      <div class="form-group">
+        <label for="color">Cor</label>
+        <input
+          class="form-control"
+          id="color"
+          required
+          [(ngModel)]="currentCar.color"
+          name="color"
+        />
+    </div>  
+  
+      <button class="badge badge-danger mr-2" (click)="deleteCar()">
+        Excluir
+      </button>
+  
+      <button
+        type="submit"
+        class="badge badge-success mb-2"
+        (click)="updateCar()"
+      >
+        Atualizar
+      </button>
+      <p>{{ message }}</p>
+    </div>
+  
+    <div *ngIf="!currentCar.id">
+      <br />
+      <p>Não foi possível acessar esse Carro...</p>
+    </div>
+  </ng-template>
