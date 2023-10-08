@@ -21,7 +21,7 @@ public class CarController {
     private CarService carService;
 
     @Autowired
-    private UserService userService;
+    private LoginService loginService;
 
     @Autowired
     private JwtTokenService jwtTokenService;
