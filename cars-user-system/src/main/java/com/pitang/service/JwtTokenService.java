@@ -48,7 +48,7 @@ public class JwtTokenService {
             getClaimsJws( jwtToken );
             return true;
         }catch (ExpiredJwtException e){
-            throw new JwtInvalidException("Unauthorized - invalid session”");
+            throw new JwtInvalidException("Unauthorized - invalid session");
         }
         catch (Exception e) {
             throw new JwtInvalidException("Unauthorized");
