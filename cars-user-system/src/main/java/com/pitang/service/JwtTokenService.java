@@ -2,10 +2,7 @@ package com.pitang.service;
 
 import com.pitang.exception.JwtInvalidException;
 import com.pitang.repository.UserRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,7 +47,10 @@ public class JwtTokenService {
         try {
             getClaimsJws( jwtToken );
             return true;
-        } catch (Exception e) {
+        }catch (ExpiredJwtException e){
+            throw new JwtInvalidException("Unauthorized - invalid session”");
+        }
+        catch (Exception e) {
             throw new JwtInvalidException("Unauthorized");
         }
     }

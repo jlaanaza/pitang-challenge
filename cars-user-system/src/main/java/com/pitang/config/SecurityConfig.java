@@ -57,9 +57,8 @@ public class SecurityConfig {
          http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/signin", "/api/users/**").permitAll()
-                .anyRequest().authenticated();
-        http.addFilterBefore(new JwtAuthorizationFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
-
+                .anyRequest().authenticated()
+                .and().addFilterBefore( new JwtAuthorizationFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class );
 
         return http.build();
     }

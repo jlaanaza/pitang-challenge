@@ -1,6 +1,10 @@
 package com.pitang.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pitang.exception.ExceptionError;
+import com.pitang.exception.JwtInvalidException;
 import com.pitang.service.JwtTokenService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -34,18 +38,27 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     Authentication authentication = jwtTokenService.getAuthentication(username);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-            } catch (Exception e) {
-                response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
+            } catch (JwtInvalidException e) {
+                // Token inválido ou expirado
+                sendUnauthorizedResponse(response, e.getMessage());
                 return;
             }
         }
-        //TODO:
 //        else{
-//            response.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
+//            sendUnauthorizedResponse(response, "Unauthorized");
 //            return;
 //        }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void sendUnauthorizedResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ExceptionError exceptionError = new ExceptionError(message, HttpStatus.UNAUTHORIZED.value());
+        objectMapper.writeValue(response.getWriter(), exceptionError);
     }
 }
 
