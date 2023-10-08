@@ -9,5 +9,4 @@
 # User-specific stuff
 .car-user-system-front-end/.vscode/*
 .car-user-system-front-end/.angular/*
-
-.cars-user-system/target/
+.cars-user-system/target/*
