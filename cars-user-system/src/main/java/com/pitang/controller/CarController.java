@@ -3,7 +3,7 @@ package com.pitang.controller;
 import com.pitang.dto.CarDTO;
 import com.pitang.service.CarService;
 import com.pitang.service.JwtTokenService;
-import com.pitang.service.LoginService;
+import com.pitang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class CarController {
     private CarService carService;
 
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     @Autowired
     private JwtTokenService jwtTokenService;
@@ -58,7 +58,7 @@ public class CarController {
 
     private Long getUserId (String authorization){
         String userName = jwtTokenService.getUsernameFromToken( authorization );
-        return loginService.findIdUserByLogin( userName );
+        return userService.findIdUserByLogin( userName );
     }
 
 }

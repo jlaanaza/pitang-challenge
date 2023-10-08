@@ -47,5 +47,9 @@ public class UserService {
         userRepository.findById(id).orElseThrow( NotFoundException::new );
         userRepository.deleteById(id);
     }
+
+    public Long findIdUserByLogin(String username) {
+        return userRepository.findByLogin(username).orElseThrow( NotFoundException::new).getId();
+    }
     
 }
