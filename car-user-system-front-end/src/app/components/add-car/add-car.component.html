@@ -1,1 +1,57 @@
-<p>add-car works!</p>
+<div>
+    <div class="submit-form">
+      <div *ngIf="!submitted">
+        <div class="form-group">
+          <label for="year">Ano do Carro</label>
+          <input
+            type="text"
+            class="form-control"
+            id="year"
+            required
+            [(ngModel)]="car.year"
+            name="year"
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="licensePlate">Placa do Carro</label>
+          <input
+            class="form-control"
+            id="licensePlate"
+            required
+            [(ngModel)]="car.licensePlate"
+            name="licensePlate"
+          />
+        </div>
+
+        <div class="form-group">
+            <label for="model">Modelo do Carro</label>
+            <input
+              class="form-control"
+              id="model"
+              required
+              [(ngModel)]="car.model"
+              name="model"
+            />
+        </div>
+
+          <div class="form-group">
+            <label for="color">Cor do Carro</label>
+            <input
+              class="form-control"
+              id="color"
+              required
+              [(ngModel)]="car.color"
+              name="color"
+            />
+          </div>          
+  
+        <button (click)="saveCar()" class="btn btn-success">Enviar</button>
+      </div>
+  
+      <div *ngIf="submitted">
+        <h4>Carro foi cadastrado com sucesso!</h4>
+        <button class="btn btn-success" (click)="newCar()">Adicionar</button>
+      </div>
+    </div>
+  </div>

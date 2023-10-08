@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MeComponent } from './components/me/me.component';
 import { CarListComponent } from './components/car-list/car-list.component';
 import { CarDetailsComponent } from './components/car-details/car-details.component';
+import { AddCarComponent } from './components/add-car/add-car.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'users', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'me', component: MeComponent },
   { path: 'cars', component: CarListComponent },
   { path: 'cars/:id', component: CarDetailsComponent },
+  { path: 'addCar', component: AddCarComponent },
 ];
 
 @NgModule({

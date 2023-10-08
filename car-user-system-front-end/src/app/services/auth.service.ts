@@ -24,4 +24,8 @@ export class AuthService {
       httpOptions
     );
   }
+
+  me(): Observable<any> {
+    return this.http.post(api+"me",httpOptions);
+  }
 }
