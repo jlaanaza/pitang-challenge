@@ -56,7 +56,7 @@ public class LoginController {
                 "firstName", user.getFirstName(),
                 "lastName", user.getLastName(),
                 "email", user.getEmail(),
-                "birthday", user.getBirthday(),
+                "birthday", Date.from( user.getBirthday().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
                 "phone", user.getPhone(),
                 "createdAt", Date.from( user.getCreatedAt().atZone( ZoneId.systemDefault()).toInstant())  ,
                 "lastLogin", Date.from( user.getLastLogin().atZone( ZoneId.systemDefault() ).toInstant())
