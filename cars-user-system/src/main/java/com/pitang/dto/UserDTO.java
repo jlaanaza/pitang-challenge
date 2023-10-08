@@ -22,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
+    private Long id;
     @NotEmpty
     @Size(max=200)
     private String firstName;
