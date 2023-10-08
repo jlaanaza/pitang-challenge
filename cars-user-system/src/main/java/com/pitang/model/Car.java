@@ -19,7 +19,7 @@ public class Car {
     private Long id;
     @Column(name = "year_field")
     private Integer year;
-    @Column(name = "license_plate")
+    @Column(name = "license_plate", unique = true)
     private String licensePlate;
     @Column(name = "model")
     private String model;

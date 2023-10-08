@@ -34,15 +34,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({DataIntegrityViolationException.class})
-    public ResponseEntity<ExceptionError> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
-        String errorMessage = exception.getMessage() != null ? exception.getMessage() : "";
+    public ResponseEntity<ExceptionError> handleDataIntegrityViolationException(DataIntegrityViolationException exception){
+        String errorMessage = exception.getMessage() != null ? exception.getMessage() :"";
 
         String responseMessage = "";
 
-        if (errorMessage.contains("USER_UNIQUE_EMAIL")) {
+        if (errorMessage.contains( "USER_UNIQUE_EMAIL" )) {
             responseMessage += "Email already exists";
-        } else if (errorMessage.contains("USER_UNIQUE_LOGIN")) {
+        } else if (errorMessage.contains( "USER_UNIQUE_LOGIN" )) {
             responseMessage += "Login already exists";
+        } else if (errorMessage.contains( "CAR_UNIQUE_LICENSE_PLATE" )) {
+            responseMessage += "License plate already exists";
+
         } else {
             responseMessage += "Data Integrity Error";
         }

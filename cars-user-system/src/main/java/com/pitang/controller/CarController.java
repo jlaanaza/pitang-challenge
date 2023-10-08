@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,13 +39,13 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<CarDTO> create(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @RequestBody CarDTO carDTO) {
+    public ResponseEntity<CarDTO> create(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @RequestBody @Valid CarDTO carDTO) {
         CarDTO response = carService.create(carDTO, getUserId( authorization ));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CarDTO> update(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @RequestBody CarDTO carDTO, @PathVariable(value = "id") Long id) {
+    public ResponseEntity<CarDTO> update(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @RequestBody @Valid CarDTO carDTO, @PathVariable(value = "id") Long id) {
         CarDTO response = carService.update(carDTO, id, getUserId( authorization ));
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.OK);
     }

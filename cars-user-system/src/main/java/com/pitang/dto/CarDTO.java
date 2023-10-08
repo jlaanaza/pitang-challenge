@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Getter
@@ -17,10 +18,13 @@ public class CarDTO {
     @NotNull
     private Integer year;
     @NotEmpty
+    @Size(max = 8)
     private String licensePlate;
     @NotEmpty
+    @Size(max = 200)
     private String model;
     @NotEmpty
+    @Size(max = 200)
     private String color;
 
 }

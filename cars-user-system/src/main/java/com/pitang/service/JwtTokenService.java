@@ -27,7 +27,7 @@ public class JwtTokenService {
     @Value("${security.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${security.jwt.token-validity-in-seconds}")
+    @Value("${security.jwt.token-validity-in-milliseconds}")
     private long expirationMs;
 
     @Autowired
