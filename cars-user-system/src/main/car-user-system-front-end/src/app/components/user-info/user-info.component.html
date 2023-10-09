@@ -1,0 +1,62 @@
+<div class="view-form">
+    <h4>Minhas Informações</h4>
+    <p>
+        <strong>Primeiro Nome:</strong>
+        {{ user.firstName }}
+    </p>
+    <p>
+        <strong>Sobrenome:</strong>
+        {{ user.lastName }}
+    </p>
+    <p>
+        <strong>Email:</strong>
+        {{ user.email }}
+    <p>
+        <strong>Sua data de nascimento:</strong>
+        {{ user.birthday }}
+    </p>    
+    <p>
+        <strong>Nome de Usuário:</strong>
+        {{ user.login }}
+    </p>   
+
+    <p>
+        <strong>Telefone:</strong>
+        {{ user.phone }}
+    </p> 
+    <p>
+        <strong>Telefone:</strong>
+        {{ user.phone }}
+    </p>
+    <strong>Carros:</strong>
+    <ul>
+        <li *ngFor="let car of user.cars">
+            <p>
+                <strong>Ano:</strong>
+                {{ car.year }}
+            </p>
+            <p>
+                <strong>Placa:</strong>
+                {{ car.licensePlate }}
+            </p>
+            <p>
+                <strong>Modelo:</strong>
+                {{ car.model }}
+            </p>
+            <p>
+                <strong>Cor:</strong>
+                {{ car.color }}
+            </p>
+        </li>
+    </ul>
+    <p>
+        <strong>Data de criação:</strong>
+        {{ user.createdAt }}
+    </p> 
+    <p>
+        <strong>Último acesso:</strong>
+        {{ user.lastLogin }}
+    </p> 
+</div>
+
+    
