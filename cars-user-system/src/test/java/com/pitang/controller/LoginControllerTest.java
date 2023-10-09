@@ -17,9 +17,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class LoginControllerTest {
@@ -56,6 +59,9 @@ public class LoginControllerTest {
         userDTO.setEmail("john@example.com");
         userDTO.setBirthday(LocalDate.of(1990, 1, 1));
         userDTO.setPhone("1234567890");
+        userDTO.setCreatedAt( LocalDateTime.now() );
+        userDTO.setLastLogin( LocalDateTime.now() );
+
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("firstName", "John");
@@ -63,8 +69,8 @@ public class LoginControllerTest {
         claims.put("email", "john@example.com");
         String token = "sampleToken";
 
-        when(loginService.validateLogin(loginDTO)).thenReturn(userDTO);
-        when(jwtTokenService.generateJwtToken("testuser", claims)).thenReturn(token);
+        when(loginService.validateLogin(any())).thenReturn(userDTO);
+        when(jwtTokenService.generateJwtToken(anyString(), any())).thenReturn(token);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/signin")
                         .content(new ObjectMapper().writeValueAsString(loginDTO))
