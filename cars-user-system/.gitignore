@@ -1,9 +1,0 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-
-# User-specific stuff
-.idea/
-#Ignore Front-end on back-end files
-car-user-system/src/main/resources/static
-car-user-system/src/main/ng/node
