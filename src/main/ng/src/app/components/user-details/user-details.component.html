@@ -1,12 +1,12 @@
 <div *ngIf="viewMode; else editable">
     <div *ngIf="currentUser.id">
-      <h4>User</h4>
+      <h4>Usuário </h4>
       <div>
-        <label><strong>Primeiro Nome:</strong></label> {{ currentUser.firstName }}
+        <label><strong>Login:</strong></label> {{ currentUser.login }}
       </div>
       <div>
-        <label><strong>Sobrenome:</strong></label>
-        {{ currentUser.lastName }}
+        <label><strong>Nome completo:</strong></label>
+        {{ currentUser.firstName }} {{currentUser.lastName}}
       </div>  
       <a
         class="badge badge-warning"
@@ -21,99 +21,86 @@
       <p>Por favor clique eu um Usuário...</p>
     </div>
   </div>
+
+  <div >
+    
   
   <ng-template #editable>
+    
     <div *ngIf="currentUser.id" class="edit-form">
-      <h4>Usuário</h4>
-      <div class="form-group">
-        <label for="firstName">Primeiro Nome</label>
-        <input
-          type="text"
-          class="form-control"
-          id="firstName"
-          required
-          [(ngModel)]="currentUser.firstName"
-          name="firstName"
-        />
-      </div>
+      <h4>Editar Usuário </h4>
 
-      <div class="form-group">
-        <label for="lastName">Segundo Nome</label>
-        <input
-          class="form-control"
-          id="lastName"
-          required
-          [(ngModel)]="currentUser.lastName"
-          name="lastName"
-        />
-      </div>
-
-      <div class="form-group">
+      <form name="user" (ngSubmit)="f.form.valid && updateUser()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="firstName">Primeiro Nome</label>
+          <input type="text" class="form-control" name="firstName" [(ngModel)]="currentUser.firstName" required
+            #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }" />
+        </div>
+        <div *ngIf="firstName.errors && f.submitted" class="invalid-feedback d-block">
+          Primeiro nome é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="lastName">Segundo Nome</label>
+          <input type="text" class="form-control" name="lastName" [(ngModel)]="currentUser.lastName" required #lastName="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }" />
+        </div>
+        <div *ngIf="lastName.errors && f.submitted" class="invalid-feedback d-block">
+          Segundo nome é obrigatório!
+        </div>
+        <div class="form-group">
           <label for="email">Email</label>
-          <input
-            class="form-control"
-            id="email"
-            required
-            [(ngModel)]="currentUser.email"
-            name="email"
-          />
-      </div>
-
-        <div class="form-group">
-          <label for="birthday">Sua data de nascimento</label>
-          <input
-            class="form-control"
-            id="birthday"
-            required
-            [(ngModel)]="currentUser.birthday"
-            name="birthday"
-          />
+          <input type="text" class="form-control" name="email" [(ngModel)]="currentUser.email" required #email="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+        </div>
+        <div *ngIf="email.errors && f.submitted" class="invalid-feedback d-block">
+          Email é obrigatório!
         </div>
         <div class="form-group">
-          <label for="login">Nome de Usuário</label>
-          <input
-            class="form-control"
-            id="login"
-            required
-            [(ngModel)]="currentUser.login"
-            name="login"
-          />
+          <label for="birthday">Data de Nascimento</label>
+          <input type="birthday" class="form-control" name="birthday" [(ngModel)]="currentUser.birthday" required
+            #birthday="ngModel" [ngClass]="{ 'is-invalid': f.submitted && birthday.errors }" />
         </div>
-
+        <div *ngIf="birthday.errors && f.submitted" class="invalid-feedback d-block">
+          Data de aniversário é obrigatória!
+        </div>
+        <div class="form-group">
+          <label for="login">Nome de usuário</label>
+          <input type="login" class="form-control" name="login" [(ngModel)]="currentUser.login" required #login="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && login.errors }" />
+        </div>
+        <div *ngIf="login.errors && f.submitted" class="invalid-feedback d-block">
+          Nome de usuário é obrigatório!
+        </div>
         <div class="form-group">
           <label for="password">Senha</label>
-          <input
-            class="form-control"
-            id="password"
-            required
-            [(ngModel)]="currentUser.password"
-            name="password"
-          />
+          <input type="password" class="form-control" name="password" [(ngModel)]="currentUser.password" required minlength="6"
+            #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }" />
         </div>
-
+        <div *ngIf="password.errors && f.submitted" class="invalid-feedback  d-block">
+          <div *ngIf="password.errors['required']">Senha é obrigatória</div>
+          <div *ngIf="password.errors['minlength']">
+            Senha deve ter no mínimo 6 caracteres
+          </div>
+        </div>
         <div class="form-group">
           <label for="phone">Telefone</label>
-          <input
-            class="form-control"
-            id="phone"
-            required
-            [(ngModel)]="currentUser.phone"
-            name="phone"
-          />
+          <input type="text" class="form-control" name="phone" [(ngModel)]="currentUser.phone" required #phone="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && phone.errors }" />
         </div>
+        <div *ngIf="phone.errors && f.submitted" class="invalid-feedback d-block">
+          Telefone é obrigatório!
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Atualizar</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger btn-block" (click)="deleteUser()">
+            Excluir
+          </button>
+        </div>
+      </form>
   
-      <button class="badge badge-danger mr-2" (click)="deleteUser()">
-        Excluir
-      </button>
-  
-      <button
-        type="submit"
-        class="badge badge-success mb-2"
-        (click)="updateUser()"
-      >
-        Atualizar
-      </button>
-      <p>{{ message }}</p>
     </div>
   
     <div *ngIf="!currentUser.id">

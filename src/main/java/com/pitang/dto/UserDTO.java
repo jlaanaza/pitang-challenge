@@ -39,7 +39,7 @@ public class UserDTO {
     @Size(max=200)
     private String login;
     @NotEmpty
-    @Size(max=200)
+    @Size(min=6, max=200)
     private String password;
     @NotEmpty
     @Size(max=200)

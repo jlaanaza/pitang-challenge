@@ -51,7 +51,7 @@ export class CarDetailsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.message = res.message ? res.message : 'This car was updated successfully!';
+          this.message = res.message ? res.message : 'O carro foi atualizado com sucesso!';
         },
         error: (e) => console.error(e)
       });

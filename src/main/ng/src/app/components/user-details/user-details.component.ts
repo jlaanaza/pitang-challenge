@@ -54,7 +54,7 @@ export class UserDetailsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.message = res.message ? res.message : 'This user was updated successfully!';
+          this.message = res.message ? res.message : 'O usuário foi atualizado com sucesso!';
         },
         error: (e) => console.error(e)
       });
