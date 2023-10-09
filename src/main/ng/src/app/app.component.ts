@@ -16,7 +16,7 @@ export class AppComponent {
   username?: string;
 
   constructor(private storageService: StorageService, private authService: AuthService) {
-    this.title = 'Car User System - Angular Application';
+    this.title = 'Sistema de Usuários de Carros';
    }
 
 

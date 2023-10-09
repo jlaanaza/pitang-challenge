@@ -21,6 +21,7 @@ export class AddUserComponent implements OnInit {
   };
   submitted = false;
   isCreateFailed = false;
+  registerSucess = false;
   errorMessage = '';
 
   constructor(private userService: UserService) { }
@@ -45,11 +46,13 @@ export class AddUserComponent implements OnInit {
           console.log(res);
           this.submitted = true;
           this.isCreateFailed = false;
+          this.registerSucess = true;
           this.reloadPage();
 
         },
         error: (e) =>{
           this.errorMessage = e.error.message;
+          this.registerSucess = false;
           this.isCreateFailed = true;
         }
       });
