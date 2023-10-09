@@ -14,7 +14,7 @@
   <name>cars-user-system</name>
   <description>Pitang Challenge Cars User System</description>
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
   </properties>
   <dependencies>
     <dependency>
