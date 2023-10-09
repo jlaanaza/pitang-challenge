@@ -38,7 +38,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String requestURI = request.getRequestURI();
 
         String authorizationHeader = request.getHeader("Authorization");
-        if(isPublicRoutes(requestURI)){
+        if(!isPrivateRoutes(requestURI)){
             chain.doFilter(request, response);
         }else {
             if(!StringUtils.hasText( authorizationHeader )){
@@ -76,8 +76,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         objectMapper.writeValue(response.getWriter(), exceptionError);
     }
 
-    private boolean isPublicRoutes(String requestURI) {
-        return RoutesUtils.publicRoutes.stream().anyMatch( requestURI::startsWith );
+    private boolean isPrivateRoutes(String requestURI) {
+        return RoutesUtils.privateRoutes.stream().anyMatch( requestURI::startsWith );
     }
 }
 

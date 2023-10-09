@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/signin", "/api/users/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/cars/**","api/me").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthorizationFilter(authenticationManager(), jwtTokenService), UsernamePasswordAuthenticationFilter.class);
         http.cors();

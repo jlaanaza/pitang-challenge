@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "car-user-system-front-end": {
+    "ng": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/car-user-system-front-end",
+            "outputPath": "../resources/static",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -59,15 +59,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "demo:build",
+            "browserTarget": "ng:build",
             "proxyConfig": "proxy.conf.json"
             },
           "configurations": {
             "production": {
-              "browserTarget": "car-user-system-front-end:build:production"
+              "browserTarget": "ng:build:production"
             },
             "development": {
-              "browserTarget": "car-user-system-front-end:build:development"
+              "browserTarget": "ng:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "car-user-system-front-end:build"
+            "browserTarget": "ng:build"
           }
         },
         "test": {

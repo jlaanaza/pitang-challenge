@@ -5,4 +5,5 @@
 # User-specific stuff
 .idea/
 #Ignore Front-end on back-end files
-../car-user-system-front-end/
+src/main/resources/static
+src/main/ng/node
