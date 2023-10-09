@@ -32,7 +32,6 @@ public class UserMapper {
                 .birthday( user.getBirthday() )
                 .login( user.getLogin() )
                 .firstName( user.getFirstName() )
-                .password( user.getPassword() )
                 .lastName( user.getLastName() )
                 .cars( Objects.isNull( user.getCars() ) ? null : user.getCars().stream().map( car -> carMapper.toCarDTO( car ) ).collect( Collectors.toList()) )
                 .build();
