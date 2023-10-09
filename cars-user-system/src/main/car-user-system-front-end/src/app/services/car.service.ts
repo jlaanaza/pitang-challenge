@@ -5,7 +5,7 @@ import { Car } from '../model/car.model';
 import { HttpHeaders } from '@angular/common/http';
 import { StorageService } from './storage.service';
 
-const baseUrl = 'http://localhost:9999/api/cars';
+const baseUrl = '/api/cars';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

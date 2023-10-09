@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081", allowCredentials="true")
+@CrossOrigin(origins = "http://localhost:8080", allowCredentials="true")
 @RestController
 @RequestMapping("api/cars")
 public class CarController {
