@@ -1,89 +1,78 @@
-<div>
-    <div class="submit-form">
-      <div *ngIf="!submitted">
-        <div class="form-group">
-          <label for="firstName">Primeiro Nome</label>
-          <input
-            type="text"
-            class="form-control"
-            id="firstName"
-            required
-            [(ngModel)]="user.firstName"
-            name="firstName"
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="lastName">Segundo Nome</label>
-          <input
-            class="form-control"
-            id="lastName"
-            required
-            [(ngModel)]="user.lastName"
-            name="lastName"
-          />
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              class="form-control"
-              id="email"
-              required
-              [(ngModel)]="user.email"
-              name="email"
-            />
-        </div>
-
-          <div class="form-group">
-            <label for="birthday">Sua data de nascimento</label>
-            <input
-              class="form-control"
-              id="birthday"
-              required
-              [(ngModel)]="user.birthday"
-              name="birthday"
-            />
-          </div>
-          <div class="form-group">
-            <label for="login">Nome de Usuário</label>
-            <input
-              class="form-control"
-              id="login"
-              required
-              [(ngModel)]="user.login"
-              name="login"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="password">Senha</label>
-            <input
-              class="form-control"
-              id="password"
-              required
-              [(ngModel)]="user.password"
-              name="password"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Telefone</label>
-            <input
-              class="form-control"
-              id="phone"
-              required
-              [(ngModel)]="user.phone"
-              name="phone"
-            />
-          </div>
-  
-        <button (click)="saveUser()" class="btn btn-success">Enviar</button>
+<div class="col-md-12">
+  <div class="card card-container">
+    <form name="user" (ngSubmit)="f.form.valid && saveUser()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="firstName">Primeiro Nome</label>
+        <input type="text" class="form-control" name="firstName" [(ngModel)]="user.firstName" required
+          #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }" />
       </div>
-  
-      <div *ngIf="submitted">
-        <h4>Usuário foi cadastrado com sucesso!</h4>
-        <button class="btn btn-success" (click)="newUser()">Adicionar</button>
+      <div *ngIf="firstName.errors && f.submitted" class="invalid-feedback d-block">
+        Primeiro nome é obrigatório!
       </div>
-    </div>
-  </div>
+      <div class="form-group">
+        <label for="lastName">Segundo Nome</label>
+        <input type="text" class="form-control" name="lastName" [(ngModel)]="user.lastName" required #lastName="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }" />
+      </div>
+      <div *ngIf="lastName.errors && f.submitted" class="invalid-feedback d-block">
+        Segundo nome é obrigatório!
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="user.email" required #email="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+      </div>
+      <div *ngIf="email.errors && f.submitted" class="invalid-feedback d-block">
+        Email é obrigatório!
+      </div>
+      <div class="form-group">
+        <label for="birthday">Data de Nascimento</label>
+        <input type="birthday" class="form-control" name="birthday" [(ngModel)]="user.birthday" required
+          #birthday="ngModel" [ngClass]="{ 'is-invalid': f.submitted && birthday.errors }" />
+      </div>
+      <div *ngIf="birthday.errors && f.submitted" class="invalid-feedback d-block">
+        Data de aniversário é obrigatória!
+      </div>
+      <div class="form-group">
+        <label for="login">Nome de usuário</label>
+        <input type="login" class="form-control" name="login" [(ngModel)]="user.login" required #login="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && login.errors }" />
+      </div>
+      <div *ngIf="login.errors && f.submitted" class="invalid-feedback d-block">
+        Nome de usuário é obrigatório!
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="user.password" required minlength="6"
+          #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }" />
+      </div>
+      <div *ngIf="password.errors && f.submitted" class="invalid-feedback  d-block">
+        <div *ngIf="password.errors['required']">Senha é obrigatória</div>
+        <div *ngIf="password.errors['minlength']">
+          Senha deve ter no mínimo 6 caracteres
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Telefone</label>
+        <input type="phone" class="form-control" name="phone" [(ngModel)]="user.phone" required #phone="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && phone.errors }" />
+      </div>
+      <div *ngIf="phone.errors && f.submitted" class="invalid-feedback d-block">
+        Telefone é obrigatório!
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">
+          Enviar</button>
+      </div>
+      <div class="form-group">
+        <div *ngIf="f.submitted && isCreateFailed" class="alert alert-danger" role="alert">
+          Cadastro falhou: {{ errorMessage }}
+        </div>
+      </div>
+      <div class="form-group">
+        <div *ngIf="f.submitted && !isCreateFailed" class="alert alert-success" role="alert">
+          Cadastro efetuado com sucesso!
+        </div>
+      </div>
+    </form>
+</div>

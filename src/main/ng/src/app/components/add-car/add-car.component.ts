@@ -17,6 +17,9 @@ export class AddCarComponent implements OnInit {
     color: '',
   };
   submitted = false;
+  isCreateFailed = false;
+  errorMessage = '';
+
 
   constructor(private carService: CarService) { }
 
@@ -36,8 +39,14 @@ export class AddCarComponent implements OnInit {
         next: (res) => {
           console.log(res);
           this.submitted = true;
+          this.isCreateFailed = false;
+          this.reloadPage();
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          this.errorMessage = e.error.message;
+
+          this.isCreateFailed = true;
+        }
       });
   }
 
@@ -49,6 +58,11 @@ export class AddCarComponent implements OnInit {
       model: '',
       color: '',
     };
+  }
+  reloadPage(): void {
+    setTimeout(function(){
+      window.location.reload();
+   }, 1000);
   }
 
 }
