@@ -1,6 +1,6 @@
 # Sistema de Usuário para Carros
 
-# ESTÓRIAS DE USUÁRIO
+# Estórias de Usuário
 
 Estória de Usuário 1: Montar arquitetura do sistema
 
@@ -59,6 +59,18 @@ Estória de Usuário 7: Desenvolver front-end funcional
 Como um usuário, desejo ter acesso gráfico ao sistema de forma funcional, para poder operar a aplicação.
 Critérios de Aceitação:
 Ter as rotas do backend sendo acessadas via front-end utilizando angular.
+
+# Dependências
+Para rodar o projeto é preciso ter as seguintes dependência `Maven 3.8.6`, `Node V16.18.0`, `npm 8.19.2`, `Java 11`, `Angular 15.2.9`, instaladas na máquina.
+
+# Build
+Para buildar o projeto rode o comando `mvn clean install`. Esse comando irá gerar o arquivo .jar e os arquivos estáticos do Angular.
+
+# Run 
+Para rodar o projeto utilize o comando maven `mvn spring-boot:run`. Este comando irá rodar a aplicação na porta 8080. 
+
+Para acessar a aplicação locamente utilize a rota [Localhost](http://localhost:8080).
+
 
 # SOLUÇÃO
 Tecnologias Utilizadas:
