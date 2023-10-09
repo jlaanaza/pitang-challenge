@@ -29,13 +29,25 @@ export class CarDetailsComponent implements OnInit {
 
   ngOnInit(): void {    
     if (!this.viewMode) {
-      this.errorMessage = '';
       this.getCar(this.route.snapshot.params["id"]);
     }
   }
 
   getCar(id: string): void {
     this.carService.get(id)
+      .subscribe({
+        next: (data) => {
+          this.currentCar = data;
+          console.log(data);
+        },
+        error: (e) => console.error(e)
+      });
+  }  
+
+  updateCar(): void {
+    this.errorMessage = '';
+
+    this.carService.update(this.currentCar.id, this.currentCar)
       .subscribe({
         next: (res) => {
           this.isUpdateFailed = false;
@@ -47,18 +59,6 @@ export class CarDetailsComponent implements OnInit {
           this.isUpdateSucess = false;
           this.errorMessage = e.error.message;
         }
-      });
-  }  
-
-  updateCar(): void {
-    this.errorMessage = '';
-
-    this.carService.update(this.currentCar.id, this.currentCar)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (e) => console.error(e)
       });
   }
 
