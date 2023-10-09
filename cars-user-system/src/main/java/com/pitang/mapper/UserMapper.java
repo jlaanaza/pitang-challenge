@@ -97,10 +97,6 @@ public class UserMapper {
         if (userDTO.getLastName() != null) {
             existingUser.setLastName(userDTO.getLastName());
         }
-        //todo:
-//        if(userDTO.getCars() != null){
-//            existingUser.setCars( userDTO.getCars().stream().map( carDTO -> carMapper.toCar( carDTO ) ).collect( Collectors.toList()) );
-//        }
         return existingUser;
     }
 }

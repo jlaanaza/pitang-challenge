@@ -50,19 +50,19 @@ public class CarMapper {
                 .build();
     }
 
-    public Car toUpdateCar(CarDTO carDTO, Car exitingCar) {
+    public Car toUpdateCar(CarDTO carDTO, Car existingCar) {
         if(carDTO.getLicensePlate() != null){
-            exitingCar.setLicensePlate( carDTO.getLicensePlate() );
+            existingCar.setLicensePlate( carDTO.getLicensePlate() );
         }
         if(carDTO.getYear() != null){
-            exitingCar.setYear( carDTO.getYear() );
+            existingCar.setYear( carDTO.getYear() );
         }
         if(carDTO.getModel() != null){
-            exitingCar.setModel( carDTO.getModel() );
+            existingCar.setModel( carDTO.getModel() );
         }
         if(carDTO.getColor() != null){
-            exitingCar.setColor( carDTO.getColor() );
+            existingCar.setColor( carDTO.getColor() );
         }
-        return exitingCar;
+        return existingCar;
     }
 }
