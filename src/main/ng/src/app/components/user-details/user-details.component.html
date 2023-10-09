@@ -57,11 +57,18 @@
         </div>
         <div class="form-group">
           <label for="birthday">Data de Nascimento</label>
-          <input type="birthday" class="form-control" name="birthday" [(ngModel)]="currentUser.birthday" required
-            #birthday="ngModel" [ngClass]="{ 'is-invalid': f.submitted && birthday.errors }" />
-        </div>
-        <div *ngIf="birthday.errors && f.submitted" class="invalid-feedback d-block">
-          Data de aniversário é obrigatória!
+          <div class="form">
+            <mat-form-field>
+              <mat-label>Data de Nascimento</mat-label>
+              <input matInput [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="currentUser.birthday" name="birthday"
+                required #birthday="ngModel">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div *ngIf="login.errors && f.submitted" class="invalid-feedback d-block">
+            Data de Nascimento é obrigatória!
+          </div>
         </div>
         <div class="form-group">
           <label for="login">Nome de usuário</label>
@@ -97,6 +104,16 @@
           <button class="btn btn-danger btn-block" (click)="deleteUser()">
             Excluir
           </button>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateFailed" class="alert alert-danger" role="alert">
+            Atualização falhou: {{ errorMessage }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateSucess" class="alert alert-success" role="alert">
+            Atualização efetuada com sucesso!
+          </div>
         </div>
       </form>
   

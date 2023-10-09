@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-details',
@@ -21,8 +22,11 @@ export class UserDetailsComponent implements OnInit {
     password: '',
     phone: '',
   };
+  maxDate = new Date();
+  isUpdateFailed = false;
+  isUpdateSucess = false;
   
-  message = '';
+  errorMessage = '';
 
   constructor(
     private userService: UserService,
@@ -31,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit(): void {    
     if (!this.viewMode) {
-      this.message = '';
+      this.errorMessage = '';
       this.getUser(this.route.snapshot.params["id"]);
     }
   }
@@ -41,22 +45,29 @@ export class UserDetailsComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.currentUser = data;
-          console.log(data);
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          console.log(e);
+          
+        }
       });
   }  
 
   updateUser(): void {
-    this.message = '';
+    this.errorMessage = '';
 
     this.userService.update(this.currentUser.id, this.currentUser)
       .subscribe({
         next: (res) => {
-          console.log(res);
-          this.message = res.message ? res.message : 'O usuário foi atualizado com sucesso!';
+          this.isUpdateFailed = false;
+          this.isUpdateSucess = true;
+          this.reloadPage();
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          this.isUpdateFailed = true;
+          this.isUpdateSucess = false;
+          this.errorMessage = e.error.message;
+        }
       });
   }
 
@@ -69,6 +80,12 @@ export class UserDetailsComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  reloadPage(): void {
+    setTimeout(function(){
+      window.location.reload();
+   }, 1000);
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="col-md-12">
   <h4>Adicionar novo usuário</h4>
-  <div >
+  <div>
     <form name="user" (ngSubmit)="f.form.valid && saveUser()" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="firstName">Primeiro Nome</label>
@@ -28,11 +28,18 @@
       </div>
       <div class="form-group">
         <label for="birthday">Data de Nascimento</label>
-        <input type="birthday" class="form-control" name="birthday" [(ngModel)]="user.birthday" required
-          #birthday="ngModel" [ngClass]="{ 'is-invalid': f.submitted && birthday.errors }" />
-      </div>
-      <div *ngIf="birthday.errors && f.submitted" class="invalid-feedback d-block">
-        Data de aniversário é obrigatória!
+        <div class="form">
+          <mat-form-field>
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="user.birthday" name="birthday"
+              required #birthday="ngModel">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div *ngIf="login.errors && f.submitted" class="invalid-feedback d-block">
+          Data de Nascimento é obrigatória!
+        </div>
       </div>
       <div class="form-group">
         <label for="login">Nome de usuário</label>
@@ -76,4 +83,4 @@
         </div>
       </div>
     </form>
-</div>
+  </div>

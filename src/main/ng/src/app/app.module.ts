@@ -16,6 +16,12 @@ import { CarDetailsComponent } from './components/car-details/car-details.compon
 import { CarListComponent } from './components/car-list/car-list.component';
 import { HttpRequestInterceptor } from './helpers/http.interceptors';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 
 @NgModule({
   declarations: [
@@ -27,13 +33,19 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     AddCarComponent,
     CarDetailsComponent,
     CarListComponent,
-    UserInfoComponent    
+    UserInfoComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule 
   ],
   providers: [{
     provide : HTTP_INTERCEPTORS,

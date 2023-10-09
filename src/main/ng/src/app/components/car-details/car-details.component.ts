@@ -18,8 +18,9 @@ export class CarDetailsComponent implements OnInit {
     model: '',
     color: '',
   };
-  
-  message = '';
+  isUpdateFailed = false;
+  isUpdateSucess = false;
+  errorMessage = '';
 
   constructor(
     private carService: CarService,
@@ -28,7 +29,7 @@ export class CarDetailsComponent implements OnInit {
 
   ngOnInit(): void {    
     if (!this.viewMode) {
-      this.message = '';
+      this.errorMessage = '';
       this.getCar(this.route.snapshot.params["id"]);
     }
   }
@@ -36,22 +37,26 @@ export class CarDetailsComponent implements OnInit {
   getCar(id: string): void {
     this.carService.get(id)
       .subscribe({
-        next: (data) => {
-          this.currentCar = data;
-          console.log(data);
+        next: (res) => {
+          this.isUpdateFailed = false;
+          this.isUpdateSucess = true;
+          this.reloadPage();
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          this.isUpdateFailed = true;
+          this.isUpdateSucess = false;
+          this.errorMessage = e.error.message;
+        }
       });
   }  
 
   updateCar(): void {
-    this.message = '';
+    this.errorMessage = '';
 
     this.carService.update(this.currentCar.id, this.currentCar)
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.message = res.message ? res.message : 'O carro foi atualizado com sucesso!';
         },
         error: (e) => console.error(e)
       });
@@ -66,6 +71,12 @@ export class CarDetailsComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  reloadPage(): void {
+    setTimeout(function(){
+      window.location.reload();
+   }, 1000);
   }
 
 }

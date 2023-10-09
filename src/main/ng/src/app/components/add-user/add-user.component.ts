@@ -22,6 +22,8 @@ export class AddUserComponent implements OnInit {
   submitted = false;
   isCreateFailed = false;
   registerSucess = false;
+  maxDate = new Date();
+
   errorMessage = '';
 
   constructor(private userService: UserService) { }

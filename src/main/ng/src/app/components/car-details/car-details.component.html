@@ -65,6 +65,16 @@
             Excluir
           </button>
         </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateFailed" class="alert alert-danger" role="alert">
+            Atualização falhou: {{ errorMessage }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateSucess" class="alert alert-success" role="alert">
+            Atualização efetuada com sucesso!
+          </div>
+        </div>
       </form>
     </div>
 
