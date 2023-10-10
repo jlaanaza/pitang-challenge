@@ -14,6 +14,8 @@ export class AppComponent {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
+  navbarOpen = false;
+
 
   constructor(private storageService: StorageService, private authService: AuthService) {
     this.title = 'Sistema de Usuários de Carros';
@@ -35,4 +37,9 @@ export class AppComponent {
 
         window.location.reload();
   }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+
 }

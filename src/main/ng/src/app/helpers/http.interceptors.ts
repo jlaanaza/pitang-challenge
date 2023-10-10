@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { StorageService } from '../services/storage.service';
+import { catchError } from 'rxjs/operators';
+
 
 
 @Injectable()
@@ -23,7 +25,16 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     }
     console.log(req);
 
-    return next.handle(req);
+    return next.handle(req).pipe(catchError(err => {
+      if ([401].includes(err.status) && this.storageService.getUser().token) {
+          this.storageService.clean();
+
+          window.location.reload();
+      }
+
+      const error = err.error?.message || err.statusText;
+      return throwError(() => error);
+  }))
   }
 }
 
