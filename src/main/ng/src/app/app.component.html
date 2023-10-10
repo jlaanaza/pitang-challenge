@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a href="#" class="navbar-brand">Sistema de Usuários de Carros</a>
+  <button class="navbar-toggler" type="button"
+          (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }" >
+      <div class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a routerLink="users" class="nav-link">Usuários</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="add" class="nav-link">Adicionar Usuário</a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a routerLink="login" class="nav-link">Efetuar Login</a>
+        </li>      
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a routerLink="cars" class="nav-link"> Carros </a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a routerLink="addCar" class="nav-link"> Adicionar Carro </a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a routerLink="me" class="nav-link"> Minhas Informações </a>
+        </li>
+        <li class="nav-item"*ngIf="isLoggedIn">
+          <a href class="nav-link" (click)="logout()">LogOut</a>
+        </li>
+      </div>
+    </div>
+</nav>
+<div>
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>  

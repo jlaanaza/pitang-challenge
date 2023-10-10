@@ -1,0 +1,89 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentCar.id">
+    <h4>Carro</h4>
+    <div>
+      <label><strong>Placa do Carro:</strong></label> {{ currentCar.licensePlate }}
+    </div>
+    <div>
+      <label><strong>Modelo :</strong></label>
+      {{ currentCar.model }}
+    </div>
+    <a class="badge badge-warning" routerLink="/cars/{{ currentCar.id }}">
+      Editar
+    </a>
+  </div>
+
+  <div *ngIf="!currentCar">
+    <br />
+    <p>Por favor clique eu um Carro...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentCar.id" class="edit-form">
+    <h4>Editar Carro</h4>
+    <div >
+      <form name="currentCar" (ngSubmit)="f.form.valid && updateCar()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="year">Ano do Carro</label>
+          <input type="text" class="form-control" name="year" [(ngModel)]="currentCar.year" required #year="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && year.errors }" />
+        </div>
+        <div *ngIf="year.errors && f.submitted" class="invalid-feedback d-block">
+          Ano do Carro é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="licensePlate">Placa do Carro</label>
+          <input type="text" class="form-control" name="licensePlate" [(ngModel)]="currentCar.licensePlate" required
+            #licensePlate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && licensePlate.errors }" />
+        </div>
+        <div *ngIf="licensePlate.errors && f.submitted" class="invalid-feedback d-block">
+          Placa do Carro é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="model">Modelo do Carro</label>
+          <input type="text" class="form-control" name="model" [(ngModel)]="currentCar.model" required #model="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && model.errors }" />
+        </div>
+        <div *ngIf="model.errors && f.submitted" class="invalid-feedback d-block">
+          Modelo do Carro é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="color">Cor do Carro</label>
+          <input type="text" class="form-control" name="color" [(ngModel)]="currentCar.color" required #color="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && color.errors }" />
+        </div>
+        <div *ngIf="color.errors && f.submitted" class="invalid-feedback d-block">
+          Cor do Carro é obrigatória!
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Atualizar</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger btn-block" (click)="deleteCar()">
+            Excluir
+          </button>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateFailed" class="alert alert-danger" role="alert">
+            Atualização falhou: {{ errorMessage }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateSucess" class="alert alert-success" role="alert">
+            Atualização efetuada com sucesso!
+          </div>
+        </div>
+      </form>
+    </div>
+
+   
+
+  </div>
+
+  <div *ngIf="!currentCar.id">
+    <br />
+    <p>Não foi possível acessar esse Carro...</p>
+  </div>
+</ng-template>

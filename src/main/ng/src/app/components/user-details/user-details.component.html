@@ -1,0 +1,126 @@
+<div *ngIf="viewMode; else editable">
+    <div *ngIf="currentUser.id">
+      <h4>Usuário </h4>
+      <div>
+        <label><strong>Login:</strong></label> {{ currentUser.login }}
+      </div>
+      <div>
+        <label><strong>Nome completo:</strong></label>
+        {{ currentUser.firstName }} {{currentUser.lastName}}
+      </div>  
+      <a
+        class="badge badge-warning"
+        routerLink="/users/{{ currentUser.id }}"
+      >
+        Editar
+      </a>
+    </div>
+  
+    <div *ngIf="!currentUser">
+      <br />
+      <p>Por favor clique eu um Usuário...</p>
+    </div>
+  </div>
+
+  <div >
+    
+  
+  <ng-template #editable>
+    
+    <div *ngIf="currentUser.id" class="edit-form">
+      <h4>Editar Usuário </h4>
+
+      <form name="user" (ngSubmit)="f.form.valid && updateUser()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="firstName">Primeiro Nome</label>
+          <input type="text" class="form-control" name="firstName" [(ngModel)]="currentUser.firstName" required
+            #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }" />
+        </div>
+        <div *ngIf="firstName.errors && f.submitted" class="invalid-feedback d-block">
+          Primeiro nome é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="lastName">Segundo Nome</label>
+          <input type="text" class="form-control" name="lastName" [(ngModel)]="currentUser.lastName" required #lastName="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }" />
+        </div>
+        <div *ngIf="lastName.errors && f.submitted" class="invalid-feedback d-block">
+          Segundo nome é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="currentUser.email" required #email="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+        </div>
+        <div *ngIf="email.errors && f.submitted" class="invalid-feedback d-block">
+          Email é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="birthday">Data de Nascimento</label>
+          <div class="form">
+            <mat-form-field>
+              <mat-label>Data de Nascimento</mat-label>
+              <input matInput [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="currentUser.birthday" name="birthday"
+                required #birthday="ngModel">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div *ngIf="login.errors && f.submitted" class="invalid-feedback d-block">
+            Data de Nascimento é obrigatória!
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="login">Nome de usuário</label>
+          <input type="login" class="form-control" name="login" [(ngModel)]="currentUser.login" required #login="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && login.errors }" />
+        </div>
+        <div *ngIf="login.errors && f.submitted" class="invalid-feedback d-block">
+          Nome de usuário é obrigatório!
+        </div>       
+        <div class="form-group">
+          <label for="phone">Telefone</label>
+          <input type="text" class="form-control" name="phone" [(ngModel)]="currentUser.phone" required #phone="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && phone.errors }" />
+        </div>
+        <div *ngIf="phone.errors && f.submitted" class="invalid-feedback d-block">
+          Telefone é obrigatório!
+        </div>
+        <div class="form-group">
+          <label for="password">Caso queira cadastrar uma nova Senha digite abaixo</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="currentUser.password"  minlength="6"
+            #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }" />
+        </div>
+        <div *ngIf="password.errors && f.submitted" class="invalid-feedback  d-block">
+          <div *ngIf="password.errors['minlength']">
+            Senha deve ter no mínimo 6 caracteres
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Atualizar</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger btn-block" (click)="deleteUser()">
+            Excluir
+          </button>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateFailed" class="alert alert-danger" role="alert">
+            Atualização falhou: {{ errorMessage }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div *ngIf="f.submitted && isUpdateSucess" class="alert alert-success" role="alert">
+            Atualização efetuada com sucesso!
+          </div>
+        </div>
+      </form>
+  
+    </div>
+  
+    <div *ngIf="!currentUser.id">
+      <br />
+      <p>Não foi possível acessar esse Usuário...</p>
+    </div>
+  </ng-template>

@@ -1,8 +1,0 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-
-# User-specific stuff
-.idea/
-#Ignore Front-end on back-end files
-../car-user-system-front-end/
