@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionError> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldError().getDefaultMessage();
-        ExceptionError exceptionError = new ExceptionError(errorMessage, 123);
+        ExceptionError exceptionError = new ExceptionError(errorMessage, HttpStatus.BAD_REQUEST.value());
 
         return new ResponseEntity<>(exceptionError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ExceptionError> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        ExceptionError exceptionError = new ExceptionError("Invalid fields", 123);
+        ExceptionError exceptionError = new ExceptionError("Invalid fields", HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(exceptionError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 
     }

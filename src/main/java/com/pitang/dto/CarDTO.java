@@ -19,7 +19,6 @@ public class CarDTO {
     @NotNull
     private Integer year;
     @NotEmpty
-    @Size(max = 8)
     private String licensePlate;
     @NotEmpty
     @Size(max = 200)
