@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
-import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-user-details',
@@ -44,6 +45,7 @@ export class UserDetailsComponent implements OnInit {
     this.userService.get(id)
       .subscribe({
         next: (data) => {
+          data.birthday = moment(data.birthday).add(1, 'day').format('yyyy-MM-DD');
           this.currentUser = data;
         },
         error: (e) => {
@@ -55,6 +57,7 @@ export class UserDetailsComponent implements OnInit {
 
   updateUser(): void {
     this.errorMessage = '';
+    this.currentUser.birthday = moment(this.currentUser.birthday).subtract(1, 'day').format('yyyy-MM-DD');
 
     this.userService.update(this.currentUser.id, this.currentUser)
       .subscribe({

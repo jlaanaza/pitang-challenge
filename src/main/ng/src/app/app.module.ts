@@ -54,7 +54,8 @@ registerLocaleData(localePt);
     provide : HTTP_INTERCEPTORS,
     useClass: HttpRequestInterceptor,
     multi   : true,
-  },{ provide: LOCALE_ID, useValue: 'pt-BR' }],
+  },
+  { provide: LOCALE_ID, useValue: 'pt-BR' },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

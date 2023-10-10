@@ -31,9 +31,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
           window.location.reload();
       }
-
-      const error = err.error?.message || err.statusText;
-      return throwError(() => error);
+      return throwError(() => err);
   }))
   }
 }
